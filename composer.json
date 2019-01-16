@@ -15,7 +15,7 @@
         "deployee/application": "dev-master",
         "deployee/config": "dev-master",
         "symfony/event-dispatcher": "^3.4",
-        "deployee/environment": "dev-master"
+        "deployee/environment": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"
