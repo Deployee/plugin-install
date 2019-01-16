@@ -8,12 +8,11 @@
             "email": "the@phizzl.de"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "php": ">=7.0",
-        "deployee/plugins": "dev-master",
-        "deployee/application": "dev-master",
-        "deployee/config": "dev-master",
+        "deployee/plugins": "^1.0",
+        "deployee/application": "^1.0",
+        "deployee/config": "^1.0",
         "symfony/event-dispatcher": "^3.4",
         "deployee/environment": "^1.0"
     },
