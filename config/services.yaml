@@ -1,0 +1,8 @@
+services:
+  Deployee\Plugins\Install\Commands\InstallCommand:
+    tags: ['console.command']
+    calls:
+      - method: setDeployDefinitionPath
+        arguments: ['%deploy_definition_path%']
+      - method: setEventDispatcher
+        arguments: ['@Deployee\Components\Environment\EnvironmentInterface']

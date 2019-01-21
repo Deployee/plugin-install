@@ -2,51 +2,36 @@
 
 namespace Deployee\Plugins\Install\Commands;
 
-use Deployee\Components\Config\ConfigInterface;
-use Deployee\Components\Environment\EnvironmentInterface;
 use Deployee\Plugins\Install\Events\RunInstallCommandEvent;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class InstallCommand extends Command
 {
     /**
-     * @var EnvironmentInterface
+     * @var string
      */
-    private $env;
+    private $deployDefinitionPath;
 
     /**
-     * @var ConfigInterface
-     */
-    private $config;
-
-    /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $eventDispatcher;
 
     /**
-     * @param EnvironmentInterface $env
+     * @param string $deployDefinitionPath
      */
-    public function setEnv(EnvironmentInterface $env)
+    public function setDeployDefinitionPath(string $deployDefinitionPath)
     {
-        $this->env = $env;
+        $this->deployDefinitionPath = $deployDefinitionPath;
     }
 
     /**
-     * @param ConfigInterface $config
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function setConfig(ConfigInterface $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @param EventDispatcher $eventDispatcher
-     */
-    public function setEventDispatcher(EventDispatcher $eventDispatcher)
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -68,13 +53,8 @@ class InstallCommand extends Command
     {
         $output->writeln('Running install');
 
-        $path = $this->config->get('deploy_definition_path', 'definitions');
-        $path = strpos($path, '/') !== 0 && strpos($path, ':') !== 1
-            ? $this->env->getWorkDir() . DIRECTORY_SEPARATOR . $path
-            : $path;
-
-        if(!is_dir($path)){
-            $output->writeln(sprintf('Directory %s does not exist', $path));
+        if(!is_dir($this->deployDefinitionPath)){
+            $output->writeln(sprintf('Directory %s does not exist', $this->deployDefinitionPath));
             exit(255);
         }
 

@@ -3,23 +3,13 @@
 
 namespace Deployee\Plugins\Install;
 
-
-use Deployee\Components\Application\CommandCollection;
-use Deployee\Components\Container\ContainerInterface;
 use Deployee\Components\Plugins\PluginInterface;
-use Deployee\Plugins\Install\Commands\InstallCommand;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class InstallPlugin implements PluginInterface
 {
-    public function boot(ContainerInterface $container)
+    public function boot(ContainerBuilder $container)
     {
 
-    }
-
-    public function configure(ContainerInterface $container)
-    {
-        /* @var CommandCollection $commandCollection */
-        $commandCollection = $container->get(CommandCollection::class);
-        $commandCollection->addCommand(new InstallCommand());
     }
 }
