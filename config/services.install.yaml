@@ -6,4 +6,4 @@ services:
       - method: setDeployDefinitionPath
         arguments: ['%deploy_definition_path%']
       - method: setEventDispatcher
-        arguments: ['@Deployee\Components\Environment\EnvironmentInterface']
+        arguments: ['@Symfony\Component\EventDispatcher\EventDispatcherInterface']
