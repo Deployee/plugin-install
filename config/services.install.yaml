@@ -1,5 +1,6 @@
 services:
   Deployee\Plugins\Install\Commands\InstallCommand:
+    class: Deployee\Plugins\Install\Commands\InstallCommand
     tags: ['console.command']
     calls:
       - method: setDeployDefinitionPath
