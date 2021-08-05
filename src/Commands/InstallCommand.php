@@ -78,7 +78,7 @@ class InstallCommand extends Command
             exit(255);
         }
 
-        $this->eventDispatcher->dispatch(RunInstallCommandEvent::class, new RunInstallCommandEvent());
+        $this->eventDispatcher->dispatch(new RunInstallCommandEvent(), RunInstallCommandEvent::class);
 
         $output->writeln('Finished installing');
     }
