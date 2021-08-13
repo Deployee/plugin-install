@@ -63,23 +63,32 @@ class InstallCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Running install');
+        try {
+            $output->writeln('Running install');
 
-        $path = $this->config->get('deploy_definition_path', 'definitions');
-        $path = strpos($path, '/') !== 0 && strpos($path, ':') !== 1
-            ? $this->env->getWorkDir() . DIRECTORY_SEPARATOR . $path
-            : $path;
+            $path = $this->config->get('deploy_definition_path', 'definitions');
+            $path = strpos($path, '/') !== 0 && strpos($path, ':') !== 1
+                ? $this->env->getWorkDir() . DIRECTORY_SEPARATOR . $path
+                : $path;
 
-        if(!is_dir($path)){
-            $output->writeln(sprintf('Directory %s does not exist', $path));
-            exit(255);
+            if (!is_dir($path)) {
+                $output->writeln(sprintf('Directory %s does not exist', $path));
+                exit(255);
+            }
+
+            $this->eventDispatcher->dispatch(new RunInstallCommandEvent(), RunInstallCommandEvent::class);
+
+            $output->writeln('Finished installing');
+
+            return Command::SUCCESS;
+        } catch (\Error | \Exception $e) {
+            $output->writeln('Failed installing | ' . $e->getMessage());
+
+            return Command::FAILURE;
         }
-
-        $this->eventDispatcher->dispatch(RunInstallCommandEvent::class, new RunInstallCommandEvent());
-
-        $output->writeln('Finished installing');
     }
 }

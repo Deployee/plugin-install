@@ -2,9 +2,9 @@
 
 namespace Deployee\Plugins\Install\Events;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class RunInstallCommandEvent extends Event
+class RunInstallCommandEvent extends EventDispatcher
 {
 
 }
